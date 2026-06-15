@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>NeuroHealth | AI Symptom Analyser</title>
+    <!-- Google Fonts for modern typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <div class="mobile-container">
+        
+        <!-- Neural Network Background Canvas -->
+        <canvas id="neural-canvas"></canvas>
+
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <i class="fa-solid fa-heart-pulse logo-icon"></i>
+                <h1>NeuroHealth</h1>
+            </div>
+            <p class="subtitle">AI Symptom Analyser</p>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="app-body" id="app-content">
+            
+            <!-- Step 1: Symptom Selection -->
+            <section id="step-symptoms" class="view-section active-view">
+                <div class="section-header">
+                    <h2>How are you feeling today?</h2>
+                    <p>Select all symptoms you are currently experiencing.</p>
+                </div>
+                
+                <div id="symptoms-grid" class="symptoms-grid">
+                    <!-- Symptoms will be injected via JS -->
+                </div>
+
+                <div class="action-container">
+                    <button id="btn-analyze" class="btn-primary" disabled>
+                        <span>Analyze Symptoms</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Step 2: Loading State -->
+            <section id="step-loading" class="view-section">
+                <div class="loading-container">
+                    <div class="pulse-ring"></div>
+                    <i class="fa-solid fa-brain ai-icon"></i>
+                    <h2>AI is Analyzing...</h2>
+                    <p>Processing symptoms through our neural network.</p>
+                </div>
+            </section>
+
+            <!-- Step 3: Result View -->
+            <section id="step-result" class="view-section">
+                <div class="result-header">
+                    <button class="btn-icon" id="btn-back"><i class="fa-solid fa-chevron-left"></i></button>
+                    <h2>Diagnostic Insights</h2>
+                    <div style="width: 40px;"></div> <!-- Spacer -->
+                </div>
+
+                <div class="card result-card">
+                    <p class="label">Predicted Ailment</p>
+                    <h3 id="res-disease" class="disease-name">COVID-19</h3>
+                    
+                    <div class="badge-row">
+                        <div id="res-severity" class="severity-badge serious">Serious</div>
+                        <div class="confidence-badge">
+                            <i class="fa-solid fa-bullseye"></i> <span id="res-confidence">96%</span> Match
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Explainable AI Section -->
+                <div class="xai-container">
+                    <div class="xai-header">
+                        <h3>Explainable AI (XAI) Reasonings</h3>
+                        <i class="fa-solid fa-circle-info tooltip-icon" title="SHAP Values derived from Random Forest"></i>
+                    </div>
+                    <p class="xai-desc">Here is how your symptoms contributed to the AI's prediction.</p>
+                    
+                    <div id="xai-bars" class="xai-bars-list">
+                        <!-- Bars injected via JS -->
+                    </div>
+                </div>
+                
+                <div class="disclaimer-alert">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <p>This AI prediction is for informational purposes only. Consult a real doctor for medical advice.</p>
+                </div>
+            </section>
+
+        </main>
+        
+        <!-- Bottom Tab Bar for aesthetics -->
+        <nav class="bottom-nav">
+            <div class="nav-item active"><i class="fa-solid fa-stethoscope"></i></div>
+            <div class="nav-item"><i class="fa-solid fa-clock-rotate-left"></i></div>
+            <div class="nav-item"><i class="fa-solid fa-user"></i></div>
+        </nav>
+        
+    </div>
+
+    <script src="neuro-bg.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

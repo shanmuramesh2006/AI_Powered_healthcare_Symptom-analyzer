@@ -1,0 +1,405 @@
+:root {
+    --bg-color: #0f172a;
+    --container-bg: #1e293b;
+    --primary: #6366f1;
+    --primary-glow: rgba(99, 102, 241, 0.5);
+    --secondary: #8b5cf6;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --card-bg: rgba(30, 41, 59, 0.7);
+    --card-border: rgba(255, 255, 255, 0.1);
+    
+    /* Severity Colors */
+    --sev-mild: #10b981;
+    --sev-normal: #f59e0b;
+    --sev-serious: #ef4444;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Outfit', sans-serif;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden; /* Desktop view */
+}
+
+/* Mobile Frame */
+.mobile-container {
+    width: 100%;
+    max-width: 414px;
+    height: 100vh;
+    max-height: 896px;
+    background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+@media (min-width: 480px) {
+    .mobile-container {
+        height: 90vh;
+        border-radius: 40px;
+        border: 8px solid #334155;
+    }
+}
+
+/* Neural Canvas Background */
+#neural-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* Header */
+.app-header {
+    padding: 30px 24px 20px;
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    box-shadow: 0 10px 25px var(--primary-glow);
+    z-index: 10;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-icon {
+    font-size: 24px;
+    color: white;
+    animation: heartbeat 1.5s infinite;
+}
+
+.app-header h1 {
+    font-size: 24px;
+    font-weight: 700;
+    color: white;
+}
+
+.subtitle {
+    margin-top: 5px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 14px;
+    font-weight: 300;
+}
+
+/* Main Content Area */
+.app-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px;
+    position: relative;
+}
+
+/* Scrollbar hiding for sleek look */
+.app-body::-webkit-scrollbar { display: none; }
+.app-body { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Sections */
+.view-section {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.4s ease-in-out;
+}
+
+.active-view {
+    display: block;
+    animation: fadeIn 0.5s forwards;
+}
+
+.section-header h2 {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.section-header p {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-bottom: 24px;
+}
+
+/* Symptoms Grid */
+.symptoms-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 40px;
+}
+
+.symptom-chip {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    padding: 10px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    color: var(--text-main);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.symptom-chip.selected {
+    background: var(--primary);
+    border-color: var(--primary);
+    box-shadow: 0 4px 15px var(--primary-glow);
+    transform: translateY(-2px);
+}
+
+/* Buttons */
+.action-container {
+    position: absolute;
+    bottom: 24px;
+    left: 24px;
+    right: 24px;
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 16px;
+    border-radius: 16px;
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    border: none;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 10px 25px var(--primary-glow);
+    transition: transform 0.2s;
+}
+
+.btn-primary:disabled {
+    background: #334155;
+    box-shadow: none;
+    color: #64748b;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.btn-primary:not(:disabled):active {
+    transform: scale(0.97);
+}
+
+/* Loading State */
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 60vh;
+    text-align: center;
+}
+
+.ai-icon {
+    font-size: 48px;
+    color: var(--primary);
+    margin-bottom: 24px;
+    z-index: 2;
+}
+
+.pulse-ring {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: var(--primary);
+    opacity: 0.2;
+    animation: pulse 1.5s infinite;
+}
+
+.loading-container h2 { margin-bottom: 8px; }
+.loading-container p { color: var(--text-muted); font-size: 14px; }
+
+/* Result Header */
+.result-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.btn-icon {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Result Card */
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 24px;
+    padding: 24px;
+    backdrop-filter: blur(10px);
+}
+
+.result-card {
+    margin-bottom: 24px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.result-card .label {
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+.disease-name {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    background: linear-gradient(to right, #f8fafc, #94a3b8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.badge-row {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}
+
+.severity-badge {
+    padding: 6px 16px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+}
+.severity-badge.mild { background: rgba(16, 185, 129, 0.2); color: var(--sev-mild); }
+.severity-badge.normal { background: rgba(245, 158, 11, 0.2); color: var(--sev-normal); }
+.severity-badge.serious { background: rgba(239, 68, 68, 0.2); color: var(--sev-serious); }
+
+.confidence-badge {
+    padding: 6px 16px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 500;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* XAI Section */
+.xai-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+.xai-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+}
+
+.xai-bar-row {
+    margin-bottom: 16px;
+}
+
+.xai-label-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    margin-bottom: 6px;
+}
+
+.xai-track {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.xai-fill {
+    height: 100%;
+    border-radius: 4px;
+    background: var(--primary);
+    width: 0%; /* Adjusted via JS */
+    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.xai-fill.positive { background: var(--sev-serious); }
+.xai-fill.negative { background: var(--sev-mild); }
+
+/* Disclaimer */
+.disclaimer-alert {
+    display: flex;
+    gap: 12px;
+    background: rgba(245, 158, 11, 0.1);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    padding: 12px;
+    border-radius: 12px;
+    margin-top: 24px;
+    margin-bottom: 60px;
+}
+.disclaimer-alert i { color: var(--sev-normal); margin-top: 2px; }
+.disclaimer-alert p { font-size: 12px; color: rgba(255, 255, 255, 0.8); line-height: 1.4; }
+
+/* Bottom Nav */
+.bottom-nav {
+    display: flex;
+    justify-content: space-around;
+    padding: 16px 0 24px;
+    background: var(--container-bg);
+    border-top: 1px solid var(--card-border);
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+}
+
+.nav-item {
+    color: var(--text-muted);
+    font-size: 20px;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.nav-item.active {
+    color: var(--primary);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 0.5; }
+    100% { transform: scale(3); opacity: 0; }
+}
