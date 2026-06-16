@@ -35,32 +35,6 @@ Tools
 VS Code
 Git
 GitHub
-📂 Project Structure
-AI_Powered_Healthcare_Symptom_Analyzer/
-│
-├── frontend/
-│   ├── index.html
-│   ├── style.css
-│   └── script.js
-│
-├── backend/
-│   ├── SymptomAnalyzer.java
-│   ├── DiseasePrediction.java
-│   └── DatabaseConnection.java
-│
-├── machine_learning/
-│   ├── train_model.py
-│   ├── predict.py
-│   └── dataset.csv
-│
-├── database/
-│   └── healthcare.sql
-│
-├── screenshots/
-│   └── application_demo.png
-│
-├── README.md
-└── LICENSE
 🚀 How It Works
 Step 1
 
